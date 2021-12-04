@@ -852,3 +852,144 @@ print(f"""REGISTRO DE COMPRA:
 R${totalcompra} A PAGAR
 {produtomil} produtos acima de R$1000,00.
 {nomemaisbarato} é o mais barato no valor de R${maisbarato}.""")
+
+#SIMULADOR DE CAIXA ELETRONICO QUE PERGUNTA O VALOR A SER SACADO (INT) E VAI INFORMAR QUANTAS CÉDULAS SERÃO
+#ENTREGUES DE CADA (CONSIDERANDO O CAIXA COM CEDULAS DE R$50, R$20, R$10 E R$1).
+nota50 = 0
+nota20 = 0
+nota10 = 0
+nota1 = 0
+
+valorsolicitado = saque = int(input('Digite o valor a ser sacado: R$'))
+
+if saque >= 50:
+    calculo = saque // 50
+    nota50 += calculo
+    saque -= calculo*50
+
+if saque >= 20:
+    calculo = saque // 20
+    nota20 += calculo
+    saque -= calculo*20
+
+if saque >= 10:
+    calculo = saque // 10
+    nota10 += calculo
+    saque -= calculo*10
+
+if saque >= 1:
+    calculo = saque // 1
+    nota1 += calculo
+    saque -= calculo*1
+
+from time import sleep
+print('='*40)
+print('Estamos processando sua solicitação')
+sleep(2)
+print('='*40)
+print(f'Para sacar R${valorsolicitado}, você precisará:')
+if nota50 > 0:
+    print(f'{nota50} nota(s) de R$50,00')
+if nota20 > 0:
+    print(f'{nota20} nota(s) de R$20,00')
+if nota10 > 0:
+    print(f'{nota10} nota(s) de R$10,00')
+if nota1 > 0:
+    print(f'{nota1} nota(s) de R$1,00')
+
+#PROGRAMA CAIXA ELETRÔNICO MELHORADO
+
+from time import sleep
+
+nota50 = 0
+nota20 = 0
+nota10 = 0
+nota2 = 0
+tentativas = 0
+validacaosaque = True
+while validacaosaque == True:
+    valorsolicitado = saque = int(input('Digite o valor a ser sacado: R$'))
+    checagemsaque = valorsolicitado % 2
+    if checagemsaque > 0 or valorsolicitado == 0:
+        print('=' * 40)
+        tentativas += 1
+        if tentativas == 3:
+            print('Você atingiu o limite máximo de tentativas!')
+            print('=' * 40)
+            sleep(2)
+            validasolicitacao = False
+            break
+        if tentativas < 3:
+            print("""Você digitou um valor que não podemos atender.
+Lembrando que as notas disponiveis são: R$50, R$20, R$10 e R$2.""")
+            print('=' * 40)
+            sleep(2)
+    else:
+        validasolicitacao = True
+        tentativas = 0
+        validacaosaque = False
+
+while validasolicitacao == True:
+    pergunta = str(input(f'Confirma o valor de R${valorsolicitado}? [S/N]: ')).upper().strip()
+    if pergunta == 'S':
+
+        if saque >= 50:
+            calculo = saque // 50
+            nota50 += calculo
+            saque -= calculo * 50
+
+        if saque >= 20:
+            calculo = saque // 20
+            nota20 += calculo
+            saque -= calculo * 20
+
+        if saque >= 10:
+            calculo = saque // 10
+            nota10 += calculo
+            saque -= calculo * 10
+
+        if saque >= 2:
+            calculo = saque // 2
+            nota2 += calculo
+            saque -= calculo * 2
+
+        print('=' * 40)
+        print('Estamos processando sua solicitação')
+        sleep(2)
+        print('=' * 40)
+        print(f'Para sacar R${valorsolicitado}, você precisará:')
+        if nota50 > 0:
+            print(f'{nota50} nota(s) de R$50,00')
+        if nota20 > 0:
+            print(f'{nota20} nota(s) de R$20,00')
+        if nota10 > 0:
+            print(f'{nota10} nota(s) de R$10,00')
+        if nota2 > 0:
+            print(f'{nota2} nota(s) de R$2,00')
+        validasolicitacao = False
+
+    if pergunta == 'N':
+        print('=' * 40)
+        print('Ok, solicitação cancelada!')
+        sleep(2)
+        break
+
+    if pergunta != 'S' and pergunta != 'N':
+        print('=' * 40)
+        tentativas += 1
+        if tentativas == 3:
+            print('Você atingiu o número máximo de tentativas!\n')
+            sleep(2)
+            validasolicitacao = False
+            break
+        if tentativas < 3:
+            print("""Você digitou uma opção inválida!
+
+Vamos novamente! """)
+        print('=' * 40)
+        sleep(2)
+
+print('=' * 40)
+print('Obrigado por usar nossos serviços, volte sempre! ')
+
+
